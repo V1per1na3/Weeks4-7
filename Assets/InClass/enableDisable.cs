@@ -21,7 +21,7 @@ public class enableDisable : MonoBehaviour
     {
         if (Input.GetMouseButtonDown(0))
         {
-            sr.enabled = false;
+            //sr.enabled = false;
             menu.SetActive(false);
             //script.enabled = false;
 
@@ -29,7 +29,7 @@ public class enableDisable : MonoBehaviour
         }
         if (Input.GetKeyDown(KeyCode.Space))
         {
-            sr.enabled = true;
+            //sr.enabled = true;
             menu.SetActive(true);
             //script.enabled = true;
         }
