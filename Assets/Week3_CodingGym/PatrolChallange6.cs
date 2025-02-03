@@ -43,8 +43,9 @@ public class PatrolChallange6 : MonoBehaviour
 
         if (Input.GetMouseButtonDown(1))//destroy if right click
         {
-            waylists.Remove(closets);//delete closest way point from list
+            
             Destroy(closets.gameObject);//destroy closest way point
+            waylists.Remove(closets);//delete closest way point from list
 
         }
 
