@@ -32,21 +32,29 @@ public class PatrolChallange6 : MonoBehaviour
             waylists.Add(newwaylist);//add to list
         }
 
-        if (waylists.Count > 0)//if list is not empty
+        if (waylists.Count > 0)//if there something in the list
         {
             closets = waylists[0];//the first one I just spawn is the closest
             Closestdist = Vector2.Distance(mouse, closets.position);//calculate dis
+            //go thr all waypoints and update the closest way point
+            for (int i = 0; i < waylists.Count; i++)
+            {
+                Transform currentwaypoint = waylists[i];
+                float currentDis = Vector2.Distance(mouse, currentwaypoint.position);//calculate the current prefab/mouse dis
+                if (currentDis < Closestdist)//compare
+                {
+                    closets = currentwaypoint;//now this is the closest way point
+                    Closestdist = currentDis;//update closest dis
+                }
+            }
             movment();//start to move!
         }
 
-        checkcloset();//update the closest way point
-
         if (Input.GetMouseButtonDown(1))//destroy if right click
         {
-            
+
             Destroy(closets.gameObject);//destroy closest way point
             waylists.Remove(closets);//delete closest way point from list
-
         }
 
     }
@@ -60,25 +68,14 @@ public class PatrolChallange6 : MonoBehaviour
             currentwaypoint = nextwaypoint;//update currentpoint and next point
             nextwaypoint = (nextwaypoint + 1) % waylists.Count;//loop thr the list
         }
+        if (currentwaypoint >= waylists.Count || nextwaypoint >= waylists.Count)//reset to 0 if current&nextwaypoint exceed length of list
+        {
+            currentwaypoint = 0;
+            nextwaypoint = 0;
+
+        }
         //lerp with animcurve
         pos = Vector2.Lerp(waylists[currentwaypoint].position, waylists[nextwaypoint].position, curve.Evaluate(t));
         transform.position = pos;
-    }
-
-    void checkcloset()
-    {
-        Vector2 mouse = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-        //go thr all waypoints and update the closest way point
-        for (int i = 0; i < waylists.Count; i++)
-        {
-            Transform currentwaypoint = waylists[i];
-            float currentDis = Vector2.Distance(mouse, currentwaypoint.position);//calculate the current prefab/mouse dis
-            if (currentDis < Closestdist)//compare
-            {
-                closets = currentwaypoint;//now this is the closest way point
-                Closestdist = currentDis;//update closest dis
-            }
-            
-        }
     }
 }
