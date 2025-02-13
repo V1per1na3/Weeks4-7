@@ -20,7 +20,7 @@ public class dropDownEasy : MonoBehaviour
         Debug.Log (dropdown.options[index].text);
         mysprite.sprite = dropdown.options[index].image;
     }
-
+    
     private void Update()
     {
         if (Input.GetKeyDown(KeyCode.Space))
