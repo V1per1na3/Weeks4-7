@@ -5,6 +5,8 @@ using UnityEngine;
 public class randomcolor : MonoBehaviour
 {
     public SpriteRenderer sr;
+    public AudioSource click;
+    public AudioClip clip;
     // Start is called before the first frame update
     void Start()
     {
@@ -20,6 +22,12 @@ public class randomcolor : MonoBehaviour
     public void changecolor()
     {
         sr.color = Random.ColorHSV();
+        if (click.isPlaying == false)
+        {
+            click.PlayOneShot(clip);
+        }
+
+
     }
 
     public void spinnnn()
@@ -27,6 +35,10 @@ public class randomcolor : MonoBehaviour
         Vector3 rot = transform.eulerAngles;
         rot.z +=60;
         transform.eulerAngles = rot;
+        if (click.isPlaying == false)
+        {
+            click.PlayOneShot(clip);
+        }
 
     }
 }
