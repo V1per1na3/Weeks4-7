@@ -6,11 +6,10 @@ public class playerMovement : MonoBehaviour
 {
     public float speed = 5f;
     public int dir = 3;
-    public SpriteRenderer sp;
     // Start is called before the first frame update
     void Start()
     {
-        
+
     }
 
     // Update is called once per frame
@@ -19,8 +18,7 @@ public class playerMovement : MonoBehaviour
 
         Vector2 pos = transform.position;
         Vector2 face = transform.localScale;
-        Vector2 sprite = sp.transform.position;
-     
+
         if (Input.GetKey(KeyCode.A))
         {
             pos.x -= Time.deltaTime * speed;
@@ -35,10 +33,6 @@ public class playerMovement : MonoBehaviour
         transform.position = pos;
         transform.localScale = face;
 
-        //if (sprite.bounds.Contains(pos))
-        //{
-
-       // }
     }
-    }
+}
 
