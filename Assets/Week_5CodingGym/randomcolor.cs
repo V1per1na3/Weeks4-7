@@ -21,4 +21,12 @@ public class randomcolor : MonoBehaviour
     {
         sr.color = Random.ColorHSV();
     }
+
+    public void spinnnn()
+    {
+        Vector3 rot = transform.eulerAngles;
+        rot.z +=60;
+        transform.eulerAngles = rot;
+
+    }
 }
