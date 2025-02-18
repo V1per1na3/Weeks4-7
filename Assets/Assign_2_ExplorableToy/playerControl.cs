@@ -21,7 +21,7 @@ public class playerControl : MonoBehaviour
     {
         sr = GetComponent<SpriteRenderer>();
         Velo = new Vector2(0, 0);
-        grav = new Vector2(0, -0.05f);//dowanward force in y axis
+        grav = new Vector2(0, -10f);//dowanward force in y axis
         Acc = new Vector2(0, 5f);//upward force in y
         wind = new Vector2(windspeed, 0);//wind blow from right to left
     }
@@ -32,13 +32,13 @@ public class playerControl : MonoBehaviour
         Vector2 pos = transform.position;
         Vector2 screenpos = Camera.main.WorldToScreenPoint(pos);
         
-        //Always apply gravity when falling.
+        //Always apply gravity and wind when falling.
         if (isFalling)
         {
-            Velo += grav+wind;
+            Velo += (grav+wind) *Time.deltaTime;
             
         }
-
+        //Debug.Log(Velo);
         //fly movement
         //when player press space bar, add acceleration to give a up force.
         if (Input.GetKeyDown(KeyCode.Space))
