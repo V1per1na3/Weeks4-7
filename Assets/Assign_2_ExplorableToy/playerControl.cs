@@ -21,8 +21,8 @@ public class playerControl : MonoBehaviour
     {
         sr = GetComponent<SpriteRenderer>();
         Velo = new Vector2(0, 0);
-        grav = new Vector2(0, -0.02f);//dowanward force in y axis
-        Acc = new Vector2(0, 7f);//upward force in y
+        grav = new Vector2(0, -0.05f);//dowanward force in y axis
+        Acc = new Vector2(0, 5f);//upward force in y
         wind = new Vector2(windspeed, 0);//wind blow from right to left
     }
 

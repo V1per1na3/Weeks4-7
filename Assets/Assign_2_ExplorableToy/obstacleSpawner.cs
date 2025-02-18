@@ -16,7 +16,7 @@ public class obstacleSpawner : MonoBehaviour
     {
         //a list to store spawned obstacles
         obstacles = new List<GameObject>();
-        spawntimer = Random.Range(1, 4);//make a timer for spawner so obstacle spawn at random time between 1,4s
+        spawntimer = Random.Range(1, 3);//make a timer for spawner so obstacle spawn at random time between 1,4s
         
     }
 
