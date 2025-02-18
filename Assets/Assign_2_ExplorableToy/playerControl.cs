@@ -8,10 +8,13 @@ public class playerControl : MonoBehaviour
     //player can hit space bar to flap (fly) and use A and D to control left and right
     //if the bird hits the ground player cannot fly anymore. this will link to lose condition
     SpriteRenderer sr;
+
     Vector2 Velo;
     Vector2 grav;
     Vector2 Acc;
-    bool isFalling = true;
+    Vector2 wind;
+    public float windspeed =0.001f;//windspeed
+    bool isFalling = true;//check if bird is in the air, bird will be in air by default
     public float speed = 2f;//ad movement speed
     // Start is called before the first frame update
     void Start()
@@ -20,6 +23,7 @@ public class playerControl : MonoBehaviour
         Velo = new Vector2(0, 0);
         grav = new Vector2(0, -0.02f);//dowanward force in y axis
         Acc = new Vector2(0, 7f);//upward force in y
+        wind = new Vector2(windspeed, 0);//wind blow from right to left
     }
 
     // Update is called once per frame
@@ -31,7 +35,8 @@ public class playerControl : MonoBehaviour
         //Always apply gravity when falling.
         if (isFalling)
         {
-            Velo += grav;
+            Velo += grav+wind;
+            
         }
 
         //fly movement
@@ -57,24 +62,23 @@ public class playerControl : MonoBehaviour
         }
 
         //check boundary to prevent bird run ouside the camera space
-        float halfwidth = sr.bounds.extents.x;
+        float halfwidth = sr.bounds.extents.x;//this is for the size offset so it doesn't completely go outside of screen
         float halfheight = sr.bounds.extents.y;
+        //if it exceed the left of screen
         if (screenpos.x <= 0)
         {
-            pos.x = Camera.main.ScreenToWorldPoint(new Vector2(0, 0)).x + halfwidth;
+            pos.x = Camera.main.ScreenToWorldPoint(new Vector2(0, 0)).x + halfwidth;//stop going out anymore
         }
+        //if it exceed the right of screen
         if (screenpos.x >= Screen.width)
         {
-            pos.x = Camera.main.ScreenToWorldPoint(new Vector2(Screen.width, 0)).x - halfwidth;
+            pos.x = Camera.main.ScreenToWorldPoint(new Vector2(Screen.width, 0)).x - halfwidth;//stop going out anymore
         }
-        if(screenpos.y >= Screen.height)
+        //if it exceed the top of screen
+        if (screenpos.y >= Screen.height)
         {
-            pos.y = Camera.main.ScreenToWorldPoint(new Vector2(0, Screen.height)).y-halfheight;
+            pos.y = Camera.main.ScreenToWorldPoint(new Vector2(0, Screen.height)).y-halfheight;//stop going out anymore
         }
-
-
-
-
         //player cannot fly anymore if bird hits the ground.
         if (screenpos.y <= 0)
         {
@@ -88,5 +92,6 @@ public class playerControl : MonoBehaviour
             isFalling = true;
         }
         transform.position = pos;
+
     }
 }
