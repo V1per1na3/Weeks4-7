@@ -47,10 +47,11 @@ public class playerControl : MonoBehaviour
         movement();//call movment & ctrl function
         gotHit();//check for collision
         takedamage(1);
-        Debug.Log(health);
+
         //if (hitted)//debug stuff ignore this
         //{
         //    Debug.Log("hitted");
+        //    Debug.Log(health);
         //}
     }
 
@@ -183,7 +184,7 @@ public class playerControl : MonoBehaviour
             hpvisual.value = health;//update healh
             if (health <= hpvisual.minValue)
             {
-                health = min;
+                health = min;//prevent it goes to negative health
             }
             hitted = false;
         }

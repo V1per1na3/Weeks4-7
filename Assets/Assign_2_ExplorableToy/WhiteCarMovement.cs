@@ -5,7 +5,6 @@ using UnityEngine;
 public class WhiteCarMovement : MonoBehaviour
 {
     public float speed = 5;
-    //float maxspeed = 5;run super fast if got hit
     public bool outside = false;
     public whiteCarSpawner spawner;
     // Start is called before the first frame update
@@ -33,5 +32,6 @@ public class WhiteCarMovement : MonoBehaviour
         {
             outside = false;
         }
+
     }
 }

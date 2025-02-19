@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SocialPlatforms.GameCenter;
 
 public class whiteCarSpawner : MonoBehaviour
 {
@@ -12,19 +13,20 @@ public class whiteCarSpawner : MonoBehaviour
     {
         //a list to store spawned white car
         whitecars = new List<GameObject>();
-        spawntimer = Random.Range(3, 5);//make a timer for spawner so car spawn at random time between 3,5s
+        spawntimer = Random.Range(1, 3);//make a timer for spawner so car spawn at random time between 3,5s
 
     }
 
     // Update is called once per frame
     void Update()
     {
+
         spawntimer -= Time.deltaTime;//countdown timer
 
         if (spawntimer <= 0)//if timer countdown to 0 spawn a white car
         {
             spawnit();//call spawn function
-            spawntimer = Random.Range(3, 5);//reset timer
+            spawntimer = Random.Range(1, 3);//reset timer
         }
         goaway();//call destroy function
     }

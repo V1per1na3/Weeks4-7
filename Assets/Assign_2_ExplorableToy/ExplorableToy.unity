@@ -543,6 +543,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   prefab: {fileID: 6220888999860964824, guid: 8036a8de45eb5ca458392678b52d7b2d, type: 3}
   blackpoop: []
+  wcSpawner: {fileID: 572480763}
   bird: {fileID: 976416854}
 --- !u!4 &526136656
 Transform:
