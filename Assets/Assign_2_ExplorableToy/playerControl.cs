@@ -21,7 +21,7 @@ public class playerControl : MonoBehaviour
     Vector2 Acc;
     Vector2 wind;
     public bool hitted = false;
-    public float windspeed =0.001f;//windspeed
+    float windspeed;//windspeed
     bool isFalling = true;//check if bird is in the air, bird will be in air by default
     public float speed = 2f;//ad movement speed
     public float health;//start with 3 heart
@@ -38,12 +38,13 @@ public class playerControl : MonoBehaviour
         Velo = new Vector2(0, 0);
         grav = new Vector2(0, -10f);//dowanward force in y axis
         Acc = new Vector2(0, 5f);//upward force in y
-        wind = new Vector2(windspeed, 0);//wind blow from right to left
+        //wind blow from right to left
     }
 
     // Update is called once per frame
     void Update()
     {
+        wind = new Vector2(windspeed, 0);//this needs to be in update so slider can change it
         movement();//call movment & ctrl function
         gotHit();//check for collision
         takedamage(1);
@@ -188,6 +189,12 @@ public class playerControl : MonoBehaviour
             }
             hitted = false;
         }
+    }
+
+    public void windblow(float w)
+    {
+        windspeed = w;
+        //Debug.Log(windspeed);
     }
 
 
