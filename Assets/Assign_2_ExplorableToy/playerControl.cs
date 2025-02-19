@@ -1,13 +1,17 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Runtime.CompilerServices;
 using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class playerControl : MonoBehaviour
 {
-    //this script is for bird (player avatar) movement. bird will be always falling if its in the air
+    //this script is for all the bird (player avatart) elements.
+    //bird will be always falling if its in the air bc of gravity
     //player can hit space bar to flap (fly) and use A and D to control left and right
-    //if the bird hits the ground player cannot fly anymore. this will link to lose condition
+    //bird will have initial hp of 3 hearts, if bird hit obstacle or car each time, it decrease by 1
+    //if bird hp=0, trigger lose page
     SpriteRenderer sr;
     public obstacleSpawner ospawner;//get obstacle list from the spawner
     public whiteCarSpawner wcspawner;//get white car list from the spawner
@@ -20,9 +24,16 @@ public class playerControl : MonoBehaviour
     public float windspeed =0.001f;//windspeed
     bool isFalling = true;//check if bird is in the air, bird will be in air by default
     public float speed = 2f;//ad movement speed
+    public float health;//start with 3 heart
+    public Slider hpvisual;
+    public float max = 3;
+    public float min = 0f;
     // Start is called before the first frame update
     void Start()
     {
+        hpvisual.minValue = 0;
+        hpvisual.maxValue = 3;
+        hpvisual.value = health;
         sr = GetComponent<SpriteRenderer>();
         Velo = new Vector2(0, 0);
         grav = new Vector2(0, -10f);//dowanward force in y axis
@@ -35,7 +46,8 @@ public class playerControl : MonoBehaviour
     {
         movement();//call movment & ctrl function
         gotHit();//check for collision
-
+        takedamage(1);
+        Debug.Log(health);
         //if (hitted)//debug stuff ignore this
         //{
         //    Debug.Log("hitted");
@@ -126,6 +138,9 @@ public class playerControl : MonoBehaviour
                 GameObject obst = ospawner.obstacles[i];
                 if (sr.bounds.Contains(obst.transform.position))//if interacting with player sprite
                 {
+                    
+                    Destroy(ospawner.obstacles[i]);//destory the obstacle so player wont keep taking damage until it leaves player sprite bound
+                    ospawner.obstacles.Remove(ospawner.obstacles[i]);//remove it from the list.
                     hitted = true;//plaeyr got hit!
                 }
             }
@@ -135,6 +150,8 @@ public class playerControl : MonoBehaviour
                 GameObject wcs = wcspawner.whitecars[i];
                 if (sr.bounds.Contains(wcs.transform.position))//if interacting with player sprite
                 {
+                    Destroy(wcspawner.whitecars[i]);//destory the car so player wont keep taking damage until it leaves player sprite bound
+                    wcspawner.whitecars.Remove(wcspawner.whitecars[i]);//remove it from the list.
                     hitted = true;//plaeyr got hit!
                 }
             }
@@ -144,6 +161,8 @@ public class playerControl : MonoBehaviour
                 GameObject bcs = bcspawner.blackcars[i];
                 if (sr.bounds.Contains(bcs.transform.position))//if interacting with player sprite
                 {
+                    Destroy(bcspawner.blackcars[i]);//destory the car so player wont keep taking damage until it leaves player sprite bound
+                    bcspawner.blackcars.Remove(bcspawner.blackcars[i]);//remove it from the list.
                     hitted = true;//plaeyr got hit!
                 }
             }
@@ -153,6 +172,21 @@ public class playerControl : MonoBehaviour
             hitted = false;//player is not hitted in other condition
         }
 
+    }
+
+    public void takedamage(float damage)
+    {
+        //function for hp slider
+        if (hitted)//if player got hit...
+        {
+            health -= damage;//takes the damage 
+            hpvisual.value = health;//update healh
+            if (health <= hpvisual.minValue)
+            {
+                health = min;
+            }
+            hitted = false;
+        }
     }
 
 
