@@ -10,6 +10,7 @@ public class Score : MonoBehaviour
     //if black poop hits white car, score+1
     //if white poop hits black car, score+1
     public blackpoopMovement mb;
+    public whitepoopMovement wm;
     public TextMeshProUGUI score;
     float scorevalue = 0f;
     float point = 1;
@@ -24,20 +25,31 @@ public class Score : MonoBehaviour
     {
         addscore();
         mb.hitcar = false;//reset hitcar condition
+        wm.hitcar = false;
     }
 
     public void addscore()
     {
         //add score if car hit by poop
-        
         if (mb.hitcar)//if black poop hits white car
         {
-            
+            mb.sc = this;
             //Debug.Log("hitcaristrue");
             scorevalue += point;//add score
             score.text = scorevalue.ToString();//update score
             
         }
+
+        if (wm.hitcar)//if white poop hits black car
+        {
+            wm.sc = this;
+            //Debug.Log("hitcaristrue");
+            scorevalue += point;//add score
+            score.text = scorevalue.ToString();//update score
+
+        }
+
+
 
     }
 }

@@ -4,8 +4,10 @@ using UnityEngine;
 
 public class BlackCarMovement : MonoBehaviour
 {
+    //this script is for blackcar movement and check if it's outside of screen
+    //white car will start from left of screen and run to right
+    //a boolean will pass condition (if outside of screen) to the spawner so spawner know when to destory the car
     public float speed = 5;
-    //float maxspeed = 5;run super fast if got hit
     public bool outside = false;
     public blackCarSpawner spawner;
     // Start is called before the first frame update

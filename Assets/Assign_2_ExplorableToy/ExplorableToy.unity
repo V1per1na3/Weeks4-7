@@ -823,6 +823,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   mb: {fileID: 9099501231196338947, guid: 8036a8de45eb5ca458392678b52d7b2d, type: 3}
+  wm: {fileID: 8593748911968150929, guid: a0e3a883f9006fc48a79a6d157091263, type: 3}
   score: {fileID: 1248779638}
 --- !u!114 &992393006
 MonoBehaviour:
@@ -1029,6 +1030,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   prefab: {fileID: 8280286190134711199, guid: a0e3a883f9006fc48a79a6d157091263, type: 3}
   whitepoop: []
+  bcSpawner: {fileID: 190052528}
   bird: {fileID: 976416854}
 --- !u!4 &1354655305
 Transform:
