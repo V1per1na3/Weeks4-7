@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class playerControl : MonoBehaviour
@@ -8,11 +9,14 @@ public class playerControl : MonoBehaviour
     //player can hit space bar to flap (fly) and use A and D to control left and right
     //if the bird hits the ground player cannot fly anymore. this will link to lose condition
     SpriteRenderer sr;
-
+    public obstacleSpawner ospawner;//get obstacle list from the spawner
+    public whiteCarSpawner wcspawner;//get white car list from the spawner
+    public blackCarSpawner bcspawner;//get black car list from the spawner
     Vector2 Velo;
     Vector2 grav;
     Vector2 Acc;
     Vector2 wind;
+    public bool hitted = false;
     public float windspeed =0.001f;//windspeed
     bool isFalling = true;//check if bird is in the air, bird will be in air by default
     public float speed = 2f;//ad movement speed
@@ -29,14 +33,27 @@ public class playerControl : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        movement();//call movment & ctrl function
+        gotHit();//check for collision
+
+        //if (hitted)//debug stuff ignore this
+        //{
+        //    Debug.Log("hitted");
+        //}
+    }
+
+    void movement()
+    {
+        //this is for the player control and bird movement
+        //////////////////////////////////////////////////
         Vector2 pos = transform.position;
         Vector2 screenpos = Camera.main.WorldToScreenPoint(pos);
-        
+
         //Always apply gravity and wind when falling.
         if (isFalling)
         {
-            Velo += (grav+wind) *Time.deltaTime;
-            
+            Velo += (grav + wind) * Time.deltaTime;
+
         }
         //Debug.Log(Velo);
         //fly movement
@@ -46,6 +63,7 @@ public class playerControl : MonoBehaviour
             Velo = Acc;
             //Debug.Log(Velo.y);
         }
+        /////////////////
         //update position
         pos += Velo * Time.deltaTime;
 
@@ -61,7 +79,9 @@ public class playerControl : MonoBehaviour
             pos.x += Time.deltaTime * speed;
         }
 
+        ////////////////////////////////////////////////////////////
         //check boundary to prevent bird run ouside the camera space
+        ////////////////////////////////////////////////////////////
         float halfwidth = sr.bounds.extents.x;//this is for the size offset so it doesn't completely go outside of screen
         float halfheight = sr.bounds.extents.y;
         //if it exceed the left of screen
@@ -77,7 +97,7 @@ public class playerControl : MonoBehaviour
         //if it exceed the top of screen
         if (screenpos.y >= Screen.height)
         {
-            pos.y = Camera.main.ScreenToWorldPoint(new Vector2(0, Screen.height)).y-halfheight;//stop going out anymore
+            pos.y = Camera.main.ScreenToWorldPoint(new Vector2(0, Screen.height)).y - halfheight;//stop going out anymore
         }
         //player cannot fly anymore if bird hits the ground.
         if (screenpos.y <= 0)
@@ -92,6 +112,48 @@ public class playerControl : MonoBehaviour
             isFalling = true;
         }
         transform.position = pos;
+    }
+
+    public void gotHit()
+    {
+        //This is for checking if player got hit by obstacle or cars
+        //I will link this to a hp bar
+        /////////////////////////////////
+        if (!hitted)//when player did not get hit...
+        {
+            for (int i = 0; i < ospawner.obstacles.Count; i++)//loop thr obstacle list 
+            {
+                GameObject obst = ospawner.obstacles[i];
+                if (sr.bounds.Contains(obst.transform.position))//if interacting with player sprite
+                {
+                    hitted = true;//plaeyr got hit!
+                }
+            }
+
+            for (int i = 0; i < wcspawner.whitecars.Count; i++)//loop thr white car list
+            {
+                GameObject wcs = wcspawner.whitecars[i];
+                if (sr.bounds.Contains(wcs.transform.position))//if interacting with player sprite
+                {
+                    hitted = true;//plaeyr got hit!
+                }
+            }
+
+            for (int i = 0; i < bcspawner.blackcars.Count; i++)//loop thr black car list
+            {
+                GameObject bcs = bcspawner.blackcars[i];
+                if (sr.bounds.Contains(bcs.transform.position))//if interacting with player sprite
+                {
+                    hitted = true;//plaeyr got hit!
+                }
+            }
+        }
+        else
+        {
+            hitted = false;//player is not hitted in other condition
+        }
 
     }
+
+
 }

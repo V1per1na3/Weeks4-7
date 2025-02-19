@@ -999,6 +999,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 03c7e93fbf0e38e4aab410f5322715ed, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  ospawner: {fileID: 2102476984}
+  wcspawner: {fileID: 572480763}
+  bcspawner: {fileID: 190052528}
+  hitted: 0
   windspeed: 0
   speed: 2
 --- !u!212 &1842269911
