@@ -7,6 +7,9 @@ public class blackCarSpawner : MonoBehaviour
     public GameObject prefab;
     public List<GameObject> blackcars;
     float spawntimer;
+    //This script is use to spawn some black car at random time! 
+    //destory the car after they left the screen
+    //A timer that countdown and let spawner know when is the next spawn time.
     // Start is called before the first frame update
     void Start()
     {

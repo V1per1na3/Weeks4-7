@@ -5,6 +5,9 @@ using UnityEngine.SocialPlatforms.GameCenter;
 
 public class whiteCarSpawner : MonoBehaviour
 {
+    //This script is use to spawn some white car at random time! 
+    //destory the car after they left the screen
+    //A timer that countdown and let spawner know when is the next spawn time.
     public GameObject prefab;
     public List<GameObject> whitecars;
     float spawntimer;
@@ -36,7 +39,7 @@ public class whiteCarSpawner : MonoBehaviour
         //x of spawn position is right of screen
         float spawnx = Camera.main.ScreenToWorldPoint(new Vector3(0, 0, 0)).x;
         //y of spawn position is bottom of screen
-        float spawny = Camera.main.ScreenToWorldPoint(new Vector3(0, 20, 0)).y;
+        float spawny = Camera.main.ScreenToWorldPoint(new Vector3(0, 50, 0)).y;
         Vector2 pos = new Vector2(spawnx, spawny);//start from left with fixed height
         GameObject newcar = Instantiate(prefab, pos, Quaternion.identity);//spawn white car at set position
         whitecars.Add(newcar);//add to list

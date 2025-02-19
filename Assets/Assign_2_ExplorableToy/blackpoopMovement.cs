@@ -4,12 +4,17 @@ using UnityEngine;
 
 public class blackpoopMovement : MonoBehaviour
 {
+    //this script is for all blackpoop elements
+    //poop will drop from player position and fall (decrease in y)
+    //check if this black poop drops on a white car (lmao)
+    //if it does, destory the white car!
     SpriteRenderer srb;
     public bool hitcar = false;
     public float speed = 8f;
     public bool poop = false;
-    public blackPoopSpawner spawner;
+    public blackPoopSpawner spawner;//this is the spawner
     public whiteCarSpawner wcspawner;//get white car list from the spawner
+    public Score sc;//score script needs to know when collision happen to add score since detection function is here
    
 
     // Start is called before the first frame update
@@ -24,14 +29,14 @@ public class blackpoopMovement : MonoBehaviour
 
         if (poop)//drop poop only when its pooping
         {
-            dropPoop();
-            poopOnWhiteCar();
+            dropPoop();//call drop poop function
+            poopOnWhiteCar();//check if it lands on a white car?
         }
 
-        if (hitcar)
-        {
-            Debug.Log("ewww");
-        }
+        //if (hitcar)
+        //{
+        //    Debug.Log("ewww");
+        //}
 
     }
 
@@ -45,15 +50,17 @@ public class blackpoopMovement : MonoBehaviour
 
     public void poopOnWhiteCar()
     {
+        //check if it poop on a white car
 
-        for (int i = 0; i < wcspawner.whitecars.Count; i++)
+        for (int i = 0; i < wcspawner.whitecars.Count; i++)//loop thr the list of spawned white car
         {
            GameObject wc = wcspawner.whitecars[i];
-            if (srb.bounds.Contains(wc.transform.position))
+            if (srb.bounds.Contains(wc.transform.position))//if they overlap
             {
-                Destroy(wcspawner.whitecars[i]);//destory the car so player wont keep taking damage until it leaves player sprite bound
+                sc.mb = this;
+                hitcar = true;//ewwww the pop hits the car, set to true
+                Destroy(wcspawner.whitecars[i]);//destory the car after it got hit so player can't hit it again
                 wcspawner.whitecars.Remove(wcspawner.whitecars[i]);//remove it from the list.
-                hitcar = true;
             }
         }
 
