@@ -39,7 +39,7 @@ public class obstacleSpawner : MonoBehaviour
         //x of spawn position is right of screen
         float spawnx = Camera.main.ScreenToWorldPoint(new Vector3(Screen.width, 0, 0)).x;
         //y of spawn position is random range in the upper half screen.
-        float spawny = Camera.main.ScreenToWorldPoint(new Vector3 (0,Screen.height - Random.Range(0, Screen.height/2),0)).y;
+        float spawny = Camera.main.ScreenToWorldPoint(new Vector3 (0,Screen.height - Random.Range(0, Screen.height/1.5f),0)).y;
         Vector2 pos = new Vector2(spawnx, spawny);//start from right with random height (upper half screen)
         GameObject newobs = Instantiate(prefab, pos, Quaternion.identity);//spawn obstacle at set position
         obstacles.Add(newobs);//add to list
