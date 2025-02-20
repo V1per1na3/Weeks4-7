@@ -9,11 +9,9 @@ public class Startbutton : MonoBehaviour
 {
     //start game script
     public GameObject bg;
-    public Score sc;
+    public Score tt;
     public GameObject start;
     public GameObject bird;
-    public GameObject whitecarspawner;
-    public GameObject blackcarspawner;
     public GameObject obstspawer;
     public GameObject score;
     public GameObject blackpoopbutton;
@@ -50,8 +48,6 @@ public class Startbutton : MonoBehaviour
         windsliderimg2.SetActive(false);
         windsliderimg3.SetActive(false);
         bird.SetActive(true);
-        whitecarspawner.SetActive(true);
-        blackcarspawner.SetActive(true);
         obstspawer.SetActive(true);
         blackpoopbutton.SetActive(true);
         whitepoopbutton.SetActive(true);
@@ -68,14 +64,12 @@ public class Startbutton : MonoBehaviour
     public void playagain()
     {
         //reset score
-        sc.scorevalue = 0f;
-        sc.score.text = sc.scorevalue.ToString();
+        tt.scorevalue = 0f;
+        tt.score.text = tt.scorevalue.ToString();
         //default all ingame stuff set to false
         //all startgame ui set to true;
         bg.SetActive(true);
         bird.SetActive(false);
-        whitecarspawner.SetActive(false);
-        blackcarspawner.SetActive(false);
         obstspawer.SetActive(false);
         blackpoopbutton.SetActive(false);
         whitepoopbutton.SetActive(false);

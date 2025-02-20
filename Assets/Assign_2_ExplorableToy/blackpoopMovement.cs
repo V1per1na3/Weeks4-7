@@ -57,7 +57,10 @@ public class blackpoopMovement : MonoBehaviour
            GameObject wc = wcspawner.whitecars[i];
             if (srb.bounds.Contains(wc.transform.position))//if they overlap
             {
-                sc.mb = this;
+                if (sc != null)
+                {
+                    sc.mb = this;
+                }
                 hitcar = true;//ewwww the pop hits the car, set to true
                 Destroy(wcspawner.whitecars[i]);//destory the car after it got hit so player can't hit it again
                 wcspawner.whitecars.Remove(wcspawner.whitecars[i]);//remove it from the list.

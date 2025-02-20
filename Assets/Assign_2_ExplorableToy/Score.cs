@@ -18,6 +18,14 @@ public class Score : MonoBehaviour
     void Start()
     {
         score.text = scorevalue.ToString();
+        if (mb!= null)
+        {
+            mb.sc = this;
+        }
+        if (wm != null)
+        {
+            wm.sc = this;
+        }
     }
 
     // Update is called once per frame
@@ -34,7 +42,6 @@ public class Score : MonoBehaviour
         //add score if car hit by poop
         if (mb.hitcar)//if black poop hits white car
         {
-            mb.sc = this;
             //Debug.Log("hitcaristrue");
             scorevalue += point;//add score
             score.text = scorevalue.ToString();//update score
@@ -43,7 +50,6 @@ public class Score : MonoBehaviour
 
         if (wm.hitcar)//if white poop hits black car
         {
-            wm.sc = this;
             //Debug.Log("hitcaristrue");
             scorevalue += point;//add score
             score.text = scorevalue.ToString();//update score
