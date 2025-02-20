@@ -119,20 +119,14 @@ public class playerControl : MonoBehaviour
         }
         //if it exceed the top of screen
         if (screenpos.y >= Screen.height)
-        {
+        {s
             pos.y = Camera.main.ScreenToWorldPoint(new Vector2(0, Screen.height)).y - halfheight;//stop going out anymore
         }
         //player cannot fly anymore if bird hits the ground.
         if (screenpos.y <= 0)
         {
-            float currenty = pos.y;//store current height
-            pos.y = currenty;//stay in the same height
-            isFalling = false;//not falling anymore so bird stay on the ground
-            Velo = Vector2.zero;//clear velocity
-        }
-        else
-        {
-            isFalling = true;
+            pos.y= Camera.main.ScreenToWorldPoint(new Vector2(0, 0)).y + halfheight;
+
         }
         transform.position = pos;
     }
