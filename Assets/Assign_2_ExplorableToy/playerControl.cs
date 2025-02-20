@@ -16,6 +16,7 @@ public class playerControl : MonoBehaviour
     public obstacleSpawner ospawner;//get obstacle list from the spawner
     public whiteCarSpawner wcspawner;//get white car list from the spawner
     public blackCarSpawner bcspawner;//get black car list from the spawner
+    public Startbutton st;
     Vector2 Velo;
     Vector2 grav;
     Vector2 Acc;
@@ -44,10 +45,18 @@ public class playerControl : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        
         wind = new Vector2(windspeed, 0);//this needs to be in update so slider can change it
         movement();//call movment & ctrl function
         gotHit();//check for collision
         takedamage(1);
+        //reset health if health =0
+        if (health == 0)
+        {
+            st.playagain();
+            health = 3;
+            hpvisual.value = health;
+        }
 
         //if (hitted)//debug stuff ignore this
         //{

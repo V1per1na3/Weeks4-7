@@ -12,7 +12,7 @@ public class Score : MonoBehaviour
     public blackpoopMovement mb;
     public whitepoopMovement wm;
     public TextMeshProUGUI score;
-    float scorevalue = 0f;
+    public float scorevalue = 0f;
     float point = 1;
     // Start is called before the first frame update
     void Start()
@@ -26,6 +26,7 @@ public class Score : MonoBehaviour
         addscore();
         mb.hitcar = false;//reset hitcar condition
         wm.hitcar = false;
+
     }
 
     public void addscore()
