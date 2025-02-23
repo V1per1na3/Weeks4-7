@@ -17,11 +17,6 @@ public class playermovmeent : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        move();
-    }
-
-    void move()
-    {
         //this is for player movement and ctrl
         //plyaer goes left and right with input keycode A & D
         Vector2 pos = transform.position;
@@ -42,10 +37,11 @@ public class playermovmeent : MonoBehaviour
             pos.x = Camera.main.ScreenToWorldPoint(new Vector2(0, 0)).x + halfwidth;
 
         }
-        if(screenpos.x >= Screen.width)
+        if (screenpos.x >= Screen.width)
         {
             pos.x = Camera.main.ScreenToWorldPoint(new Vector2(Screen.width, 0)).x - halfwidth;
         }
         transform.position = pos;
     }
+
 }
