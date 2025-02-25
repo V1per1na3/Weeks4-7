@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Security.Cryptography.X509Certificates;
 using TreeEditor;
 using UnityEngine;
 
@@ -9,10 +10,10 @@ public class birdmovement : MonoBehaviour
     public playermovmeent player;
     SpriteRenderer sr;
     float speed = 1f;
-    float randomspeed;
     public bool runaway = false;
     float timer = 0;
-    float timeCount = 1.5f;
+    float timeCount = 1.5f; 
+    bool movingR;
     // Start is called before the first frame update
     void Start()
     {
@@ -23,39 +24,41 @@ public class birdmovement : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        Debug.Log(player.transform.position+"player");
-        Debug.Log(sr.bounds+"bird");
-        normalmove();
         closeenough();
+        normalmove();
+        
         Debug.Log("speed is"+speed);
-        Debug.Log("random speed is" + randomspeed);
-        Debug.Log(runaway);
+        //Debug.Log("random speed is" + randomspeed);
+        //Debug.Log(runaway);
     }
 
     void normalmove()
     {
         Vector2 dir = transform.localScale;
         Vector2 pos = transform.position;
+       
         pos.x += speed * Time.deltaTime;
+        float halfwidth = sr.bounds.extents.x;
         Vector2 screenpos = Camera.main.WorldToScreenPoint(pos);
-        
         /////check boundary//////
         if (screenpos.x <= 0)
         {
-            pos.x = Camera.main.ScreenToWorldPoint(new Vector2(0, 0)).x;
+            pos.x = Camera.main.ScreenToWorldPoint(new Vector2(0, screenpos.y)).x+halfwidth;
             speed *= -1;//reverse speed
             dir.x *= -1;//change spirte dir
 
         }
         if (screenpos.x >= Screen.width)
         {
-            pos.x = Camera.main.ScreenToWorldPoint(new Vector2(Screen.width, 0)).x;
+            pos.x = Camera.main.ScreenToWorldPoint(new Vector2(Screen.width, screenpos.y)).x-halfwidth;
             speed *= -1;
             dir.x *= -1;
 
         }
         transform.localScale = dir;
         transform.position = pos;
+        Debug.Log(screenpos.x);
+
     }
 
 
@@ -67,15 +70,16 @@ public class birdmovement : MonoBehaviour
             Debug.Log("overlap");
             //choose a random speed
             //I want bird to keep going to the direction of where its facing if run into player.
-            //I check dir by determinating if current speed is positive or negative.
-            //if current speed is positive, assign random positive speed 
-            if (speed >0)
-            {
-                randomspeed = Random.Range(3, 6);
+            //store direction using bool
+            movingR = speed > 0;//if speed is positive, its going right, otherwise its going left
+            float randomspeed = Random.Range(3, 6);
+            if (movingR)
+            {    
+                speed = randomspeed;
             }
-            else//if its negative, assign random negative speed
+            if(!movingR)//if its not moving right
             {
-                randomspeed = Random.Range(-6, -3);
+                speed = -randomspeed;
             }
             Debug.Log(runaway);
             runaway = true;
@@ -85,7 +89,6 @@ public class birdmovement : MonoBehaviour
         //if runaway is true
         if (runaway)
         {
-            speed = randomspeed;//assign the random speed
             //start counting down
             timer -= Time.deltaTime;
             //when timer countdown to 0
@@ -94,7 +97,14 @@ public class birdmovement : MonoBehaviour
                 //dont run away anymore
                 runaway = false;
                 //set speed back to normal
-                speed = 1f;
+                if (movingR)
+                {
+                    speed = 1f;
+                }
+                else
+                {
+                    speed = -1f;
+                }
             }
         }
     }
