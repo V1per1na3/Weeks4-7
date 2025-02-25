@@ -7,6 +7,9 @@ using UnityEngine;
 public class birdmovement : MonoBehaviour
 {
     //bird is gonna speed up and run away if it overlap with player
+    //bird is also the spawner of boombs
+    public GameObject prefabs;
+    public List<GameObject> boombs;
     public playermovmeent player;
     SpriteRenderer sr;
     float speed = 1f;
@@ -18,7 +21,7 @@ public class birdmovement : MonoBehaviour
     void Start()
     {
         sr = GetComponent<SpriteRenderer>();
-        
+        boombs = new List<GameObject>();
     }
 
     // Update is called once per frame
@@ -26,12 +29,17 @@ public class birdmovement : MonoBehaviour
     {
         closeenough();
         normalmove();
-        
-        Debug.Log("speed is"+speed);
-        //Debug.Log("random speed is" + randomspeed);
         //Debug.Log(runaway);
     }
-
+    void spawnit()
+    {
+        //spawn the bomb at bird position
+        Vector2 pos = transform.position;
+        GameObject newboombs = Instantiate(prefabs, pos, Quaternion.identity);
+        boombs.Add(newboombs);//add to list
+        Destroy(newboombs, 3);//destory after 3 sec
+        boombs.Remove(newboombs);//remove from list
+    }
     void normalmove()
     {
         Vector2 dir = transform.localScale;
@@ -57,7 +65,6 @@ public class birdmovement : MonoBehaviour
         }
         transform.localScale = dir;
         transform.position = pos;
-        Debug.Log(screenpos.x);
 
     }
 
@@ -67,11 +74,21 @@ public class birdmovement : MonoBehaviour
         //if overlap
         if (sr.bounds.Contains(player.transform.position)&&!runaway)
         {
-            Debug.Log("overlap");
+            spawnit();//spawn boombs when overlap
+            //Debug.Log("overlap");
             //choose a random speed
             //I want bird to keep going to the direction of where its facing if run into player.
             //store direction using bool
-            movingR = speed > 0;//if speed is positive, its going right, otherwise its going left
+            //if speed is positive, its going right, otherwise its going left
+            if (speed > 0)
+            {
+                movingR = true;
+            }
+            else
+            {
+                movingR = false;
+            }
+
             float randomspeed = Random.Range(3, 6);
             if (movingR)
             {    
@@ -81,11 +98,11 @@ public class birdmovement : MonoBehaviour
             {
                 speed = -randomspeed;
             }
-            Debug.Log(runaway);
             runaway = true;
             //give timer a countdown time
             timer = timeCount;
         }
+
         //if runaway is true
         if (runaway)
         {

@@ -232,7 +232,7 @@ GameObject:
   - component: {fileID: 1320710222}
   - component: {fileID: 1320710221}
   m_Layer: 0
-  m_Name: Square
+  m_Name: bird
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -250,6 +250,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e63e66258dae17444969dba9ae97578c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  prefabs: {fileID: 4616462592643065411, guid: e7e6c39ed7578ad4fbe0beb0f03b9307, type: 3}
+  boombs: []
   player: {fileID: 468853785}
   runaway: 0
 --- !u!212 &1320710222
