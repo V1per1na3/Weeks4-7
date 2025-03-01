@@ -22,9 +22,10 @@ public class spikeSpawner : MonoBehaviour
         if (spawntimer <= 0)
         {
             spwanspike();//call spawn function
-            spawntimer = Random.Range(1, 3);//reset timer
+            spawntimer = Random.Range(0.5f,1);//reset timer
 
         }
+        goaway();
     }
 
     void spwanspike()
@@ -34,7 +35,20 @@ public class spikeSpawner : MonoBehaviour
         Vector2 pos = new Vector2(spawnx, spawny);
         GameObject newspikes = Instantiate(prefabs, pos, Quaternion.identity);//spawn spikes at set position
         spikes.Add(newspikes);//add to list
-        Destroy(newspikes, 3);//destory after 3s
+    }
+
+    void goaway()
+    {
+        for (int i = spikes.Count-1; i >= 0; i--)
+        {
+            spikesmovement sm = spikes[i].GetComponent<spikesmovement>();
+            sm.spawner = this;
+            if (sm.outside)
+            {
+                Destroy(spikes[i]);
+                spikes.Remove(spikes[i]);
+            }
+        }
     }
 
 }

@@ -4,8 +4,10 @@ using UnityEngine;
 
 public class playermovmeent : MonoBehaviour
 {
+    public spikeSpawner sk;
     SpriteRenderer sr;
     public float speed =2f;
+    public bool gothit = false;
     //public float health;
 
     // Start is called before the first frame update
@@ -42,6 +44,29 @@ public class playermovmeent : MonoBehaviour
             pos.x = Camera.main.ScreenToWorldPoint(new Vector2(Screen.width, 0)).x - halfwidth;
         }
         transform.position = pos;
+        ouch();
+
+    }
+
+    public void ouch()
+    {
+        //check if player overlap with spikes
+        for (int i = sk.spikes.Count-1; i >=0; i--)//loop throught the spawned list of spikes
+        {
+            GameObject sp = sk.spikes[i];
+            if (sr.bounds.Contains(sp.transform.position))
+            {
+                gothit = true;
+                Destroy(sk.spikes[i]);
+                sk.spikes.Remove(sk.spikes[i]);
+            }
+        }
+
+        if (gothit)
+        {
+            //Debug.Log("ouch!");
+            gothit = false;
+        }
     }
 
 }

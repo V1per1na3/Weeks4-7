@@ -38,7 +38,6 @@ public class birdmovement : MonoBehaviour
         GameObject newboombs = Instantiate(prefabs, pos, Quaternion.identity);
         boombs.Add(newboombs);//add to list
         Destroy(newboombs, 3);//destory after 3 sec
-        boombs.Remove(newboombs);//remove from list
     }
     void normalmove()
     {
