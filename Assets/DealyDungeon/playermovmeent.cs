@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class playermovmeent : MonoBehaviour
 {
@@ -8,17 +9,28 @@ public class playermovmeent : MonoBehaviour
     SpriteRenderer sr;
     public float speed =2f;
     public bool gothit = false;
-    //public float health;
+    public float health;
+    public Slider hpvisual;
+    public float max = 5;
+    public float min = 0f;
 
     // Start is called before the first frame update
     void Start()
     {
         sr = GetComponent<SpriteRenderer>();
+        hpvisual.minValue = 0;
+        hpvisual.maxValue = 5;
+        hpvisual.value = health;
     }
 
     // Update is called once per frame
     void Update()
     {
+        if (health == 0)
+        {
+            health = 5;
+            hpvisual.value = health;
+        }
         //this is for player movement and ctrl
         //plyaer goes left and right with input keycode A & D
         Vector2 pos = transform.position;
@@ -45,26 +57,44 @@ public class playermovmeent : MonoBehaviour
         }
         transform.position = pos;
         ouch();
+        takedamage(1);
 
     }
 
     public void ouch()
     {
-        //check if player overlap with spikes
-        for (int i = sk.spikes.Count-1; i >=0; i--)//loop throught the spawned list of spikes
+        if (!gothit)
         {
-            GameObject sp = sk.spikes[i];
-            if (sr.bounds.Contains(sp.transform.position))
+            //check if player overlap with spikes
+            for (int i = sk.spikes.Count - 1; i >= 0; i--)//loop throught the spawned list of spikes
             {
-                gothit = true;
-                Destroy(sk.spikes[i]);
-                sk.spikes.Remove(sk.spikes[i]);
+                GameObject sp = sk.spikes[i];
+                if (sr.bounds.Contains(sp.transform.position))
+                {
+                    gothit = true;
+                    Destroy(sk.spikes[i]);
+                    sk.spikes.Remove(sk.spikes[i]);
+                }
             }
         }
-
-        if (gothit)
+        else
         {
-            //Debug.Log("ouch!");
+            gothit = false;
+        }
+
+    }
+
+    public void takedamage(float damage)
+    {
+        //function for hp slider
+        if (gothit)//if player got hit...
+        {
+            health -= damage;//takes the damage 
+            hpvisual.value = health;//update healh
+            if (health <= hpvisual.minValue)
+            {
+                health = min;//prevent it goes to negative health
+            }
             gothit = false;
         }
     }
