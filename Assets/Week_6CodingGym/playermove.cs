@@ -10,11 +10,15 @@ public class playermove : MonoBehaviour
     SpriteRenderer sp;
     public carspawner carp;
     public bool gothit = false;
+    public GameObject win;
+    AudioSource audio;
+    public AudioClip clip;
 
     // Start is called before the first frame update
     void Start()
     {
         sp = GetComponent<SpriteRenderer>();
+        audio = GetComponent<AudioSource>();
 
     }
 
@@ -24,6 +28,7 @@ public class playermove : MonoBehaviour
         movement();
         collision();
         Debug.Log(gothit);
+        victory();
     }
 
     void movement()
@@ -84,6 +89,20 @@ public class playermove : MonoBehaviour
             Vector2 pos = transform.position;
             pos = Camera.main.ScreenToWorldPoint(new Vector2(Screen.width/2, 0));
             transform.position = pos;
+        }
+    }
+
+    public void victory()
+    {
+        Vector2 pos = transform.position;
+
+        if(pos.y >= Camera.main.ScreenToWorldPoint(new Vector2(0, Screen.height)).y)
+        {
+            win.SetActive(true);
+            if (!audio.isPlaying)
+            {
+                audio.PlayOneShot(clip);
+            }
         }
     }
     
