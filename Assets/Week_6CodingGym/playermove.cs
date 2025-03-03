@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class playermove : MonoBehaviour
@@ -7,6 +8,8 @@ public class playermove : MonoBehaviour
     public float speed = 5f;
     public int dir = 1;
     SpriteRenderer sp;
+    public carspawner carp;
+    public bool gothit = false;
 
     // Start is called before the first frame update
     void Start()
@@ -19,6 +22,8 @@ public class playermove : MonoBehaviour
     void Update()
     {
         movement();
+        collision();
+        Debug.Log(gothit);
     }
 
     void movement()
@@ -54,4 +59,33 @@ public class playermove : MonoBehaviour
         transform.position = pos;
         transform.localScale = face;
     }
+
+    public void collision()
+    {
+        if (!gothit)
+        {
+            for (int i = 0; i < carp.cars.Count; i++)
+            {
+                GameObject newcar = carp.cars[i];
+                if (sp.bounds.Contains(newcar.transform.position))
+                {
+                    gothit = true;
+                }
+            }
+        }
+        else
+        {
+            gothit = false;
+        }
+        
+
+        if (gothit)
+        {
+            Vector2 pos = transform.position;
+            pos = Camera.main.ScreenToWorldPoint(new Vector2(Screen.width/2, 0));
+            transform.position = pos;
+        }
+    }
+    
+    
 }
